@@ -255,7 +255,7 @@ def winning_team
 
   game_hash.each do |home_or_away, team|
     team[:players].each do |player|
-      team_points[game_data[:team_name]] += find_player_stat(player[:player_name], :points)
+      team_points[team[:team_name]] += find_player_stat(player[:player_name], :points)
     end
   end
 
