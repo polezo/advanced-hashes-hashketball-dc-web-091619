@@ -216,3 +216,62 @@ def big_shoe_rebounds
   end
   most_boards
 end
+
+def iterate_through_players_for(name, statistic)
+  game_hash.each do |_team, game_data|
+    game_data[:players].each do |player|
+      return player[statistic] if player[:player_name] == name
+    end
+  end
+end
+
+def find_player_with_most(stat_category)
+  name = "Me"
+  most_stat = 0
+
+  game_hash.each do |home_or_away, team|
+    team[:players].each do |player|
+      if player[stat_category].is_a? String
+        if player[stat_category].length > most_stat
+          most_stat = player[stat_category].length
+          name = player[:player_name]
+        end
+      elsif player[stat_category] > amount_of_stat
+        amount_of_stat = player[statistic]
+        player_name = player[:player_name]
+      end
+    end
+  end
+
+  player_name
+end
+
+def most_points_scored
+  player_with_most_of(:points)
+end
+
+def winning_team
+  # Set up a hash to keep track of the points scored by each team. This way, we
+  # can iterate through each player, get their points scored, and increase the
+  # count in the hash.
+
+  scores = { 'Brooklyn Nets' => 0, 'Charlotte Hornets' => 0 }
+
+  game_hash.each do |_team, game_data|
+    game_data[:players].each do |player|
+      scores[game_data[:team_name]] += iterate_through_players_for(player[:player_name], :points)
+    end
+  end
+
+  scores.max_by { |_k, v| v }.first
+end
+
+def player_with_longest_name
+  player_with_most_of(:player_name)
+end
+
+# # Super Bonus Question
+
+def long_name_steals_a_ton?
+  player_with_most_of(:steals) == player_with_most_of(:player_name)
+end
