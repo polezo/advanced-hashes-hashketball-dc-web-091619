@@ -251,14 +251,15 @@ def most_points_scored
 end
 
 def winning_team
-  team_points = { 'Brooklyn Nets' => 0, 'Charlotte Hornets' => 0 }
+   team_points = { 'Brooklyn Nets' => 0, 'Charlotte Hornets' => 0 }
 
   game_hash.each do |home_or_away, team|
     team[:players].each do |player|
-      team_points[team][:team_name] += find_player_stat(player[:player_name], :points)
+      team_points[game_data[:team_name]] += find_player_stat(player[:player_name], :points)
     end
   end
-  team_points.max_by { |key, value| value }.first
+
+  scores.max_by { |_k, v| v }.first
 end
 
 def player_with_longest_name
