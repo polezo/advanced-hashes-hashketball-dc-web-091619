@@ -258,7 +258,7 @@ def winning_team
     end
   end
   team_holder = team_points.max_by { |key, value| value }
-  team_holder
+  team_holder.first
 end
 
 def player_with_longest_name
