@@ -254,7 +254,7 @@ def winning_team
    team_points = { 'Brooklyn Nets' => 0, 'Charlotte Hornets' => 0 }
   game_hash.each do |home_or_away, team|
     team[:players].each do |player|
-      team_points[team[:team_name]] += find_player_stat(player[:player_name], :points)
+      team_points[team[:team_name]] = team_points[team[:team_name]] + find_player_stat(player[:player_name], :points)
     end
   end
   team_holder = team_points.max_by do |key, value| value end
