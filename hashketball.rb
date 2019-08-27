@@ -169,7 +169,6 @@ def player_numbers (name)
   numbers = []
   game_hash.each do |home_or_away, team|
     if team[:team_name] == name
-
     team.each do |key, value|
        if key == :players
 
@@ -227,8 +226,8 @@ def find_player_stat(name, stat)
 end
 
 def find_player_with_most(stat_category)
-  name = "Me"
   most_stat = 0
+  name = "Me"
 
   game_hash.each do |home_or_away, team|
     team[:players].each do |player|
