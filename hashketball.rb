@@ -257,7 +257,8 @@ def winning_team
       team_points[team[:team_name]] += find_player_stat(player[:player_name], :points)
     end
   end
-  team_points.max_by { |key, value| value }
+  team_holder = team_points.max_by { |key, value| value }
+  team_holder.first
 end
 
 def player_with_longest_name
