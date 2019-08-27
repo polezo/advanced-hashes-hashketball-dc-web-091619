@@ -169,7 +169,6 @@ def player_numbers (name)
   numbers = []
   game_hash.each do |home_or_away, team|
     if team[:team_name] == name
-
     team.each do |key, value|
        if key == :players
 
@@ -215,4 +214,59 @@ def big_shoe_rebounds
     end
   end
   most_boards
+end
+
+
+def find_player_stat(name, stat)
+  game_hash.each do |home_or_away, team|
+    team[:players].each do |player|
+      return player[stat] if player[:player_name] == name
+    end
+  end
+end
+
+def find_player_with_most(stat_category)
+  most_stat = 0
+  name = "Me"
+
+  game_hash.each do |home_or_away, team|
+    team[:players].each do |player|
+      if player[stat_category].is_a? String
+        if player[stat_category].length > most_stat
+          most_stat = player[stat_category].length
+          name = player[:player_name]
+        end
+      elsif player[stat_category] > most_stat
+        most_stat = player[stat_category]
+        name = player[:player_name]
+      end
+    end
+  end
+  name
+end
+
+def most_points_scored
+  find_player_with_most(:points)
+end
+
+def winning_team
+   team_points = { "Brooklyn Nets" => 0, "Charlotte Hornets" => 0 }
+  game_hash.each do |home_or_away, team|
+    team[:players].each do |player|
+      team_points[team[:team_name]] = team_points[team[:team_name]] + find_player_stat(player[:player_name], :points)
+    end
+  end
+  if team_points["Brooklyn Nets"] > team_points["Charlotte Hornets"] 
+    return "Brooklyn Nets"
+  else
+    return "Charlotte Hornets"
+  end
+end
+
+def player_with_longest_name
+  find_player_with_most(:player_name)
+end
+
+def long_name_steals_a_ton?
+  find_player_with_most(:steals) == find_player_with_most(:player_name)
 end
